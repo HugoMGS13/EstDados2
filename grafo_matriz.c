@@ -18,7 +18,7 @@ int grafo_tamanho(){
     return tamanho;
 }
 
-//Função que pede os vértices existentes no grafo (Onde á relação entre dois nós através de uma aresta)
+//Função que pede os vértices existentes no grafo (Onde há relação entre dois nós através de uma aresta)
 //Essa função colocará o valor de 1 na posição que os vértices estão na matriz binária
 void grafo_inserirv(int tamanho){
     int vertice1, vertice2;
