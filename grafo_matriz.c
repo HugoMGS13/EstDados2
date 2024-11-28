@@ -4,7 +4,7 @@
 //Criando um valor máximo da matriz
 #define maximo 10
 
-//Criando a variável que irá armazenar a matriz
+//Criando a variável que irá armazenar o tamanhho da matriz
 int tamanho = 0;
 
 //Criando a matriz com o seu tamanho máximo
