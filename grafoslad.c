@@ -1,5 +1,4 @@
 //Discente: Hugo Martins Gaspar da Silva
-//Matrícula: 202311140020
 
 #include <stdio.h>
 #include <stdlib.h>
