@@ -13,8 +13,9 @@ int m[maximo][maximo];
 //Escolher o tipo de grafo
 int tipo_do_grafo(){
     int t ;
-    printf("Escolha o tipo do grafo (0 = Direcionado, 1 = Não Direcionado");
+    printf("Escolha o tipo do grafo (0 = Direcionado, 1 = Nao Direcionado) \n");
     scanf("%d", &t);
+    return t;
 }
 
 //Função que pede o tamanho da matriz pro usuário
@@ -25,49 +26,115 @@ int grafo_tamanho(){
     return tamanho;
 }
 
+//No caso de representação de um grafo direcionado:
 //Função que pede os vértices existentes no grafo (Onde há relação entre dois nós através de uma aresta)
 //Essa função colocará o valor de 1 na posição que os vértices estão na matriz binária
 void grafo_inserirv_direcionado(int tamanho){
-    for(int i = 0; i < tamanho; i++){
+    int loop, choice = 1;
+    while(loop){
+
+        loop = 0;
         int vertice1, vertice2;
-        printf("Digite o vértice de origem entre 0 e %i", tamanho-1 );
-        scanf("%i" , vertice1);
-        printf("Digite o vértice de destino entre 0 e %i", tamanho-1);
-        scanf("%i", vertice2);
+        printf("Digite um vertice de origem entre 0 e %i \n", tamanho-1 );
+        scanf("%i" , &vertice1);
+        printf("Digite um vertice de destino entre 0 e %i \n", tamanho-1);
+        scanf("%i", &vertice2);
         
         if (vertice1>tamanho-1 || vertice2>tamanho-1 || vertice1<0 || vertice2<0){
-            printf("Valor invalido, tente novamente.");
+            printf("Valor invalido \n");
         }else{
-            //m[vertice1][vertice2] = 1;
+            m[vertice1][vertice2] = 1;
+        }
+
+        printf("Aresta adicionada. Deseja colocar outra? (1 - Sim, 0 - Nao) \n");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 0:
+            break;
+        case 1:
+            loop = 1;
+            break;
+        default:
+            printf("Valor inválido, programa terminando\n");
+            break;
+        }
+    }
+}
+
+//No caso da escolha de representação de um grafo não direcionado:
+void grafo_inserirv_ndirecionado(int tamanho){
+    int loop, choice = 1;
+    while(loop){
+
+        loop = 0;
+        int vertice1, vertice2;
+        printf("Digite o vertice de extremidade da aresta entre 0 e %i \n", tamanho-1 );
+        scanf("%i" , &vertice1);
+        printf("Digite o outro vertice de extremidade da aresta entre 0 e %i \n", tamanho-1);
+        scanf("%i", &vertice2);
+        
+        if (vertice1>tamanho-1 || vertice2>tamanho-1 || vertice1<0 || vertice2<0){
+            printf("Valor invalido \n");
+        }else{
             m[vertice2][vertice1] = 1;
+            m[vertice1][vertice2] = 1;
+        }
+
+        printf("Aresta adicionada. Deseja colocar outra? (1 - Sim, 0 - Nao) \n");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 0:
+            break;
+        case 1:
+            loop = 1;
+            break;
+        default:
+            printf("Valor invalido, programa terminando\n");
+            break;
         }
     }
 
-void grafo_inserirv_direcionado(int tamanho){
-    int vertice1, vertice2;
-    printf("Escolha o vertice de origem entre 0 e %d \n", tamanho-1);
-    scanf("%d", &vertice1);
-    printf("Escolha o vertice de destino entre 0 e %d \n", tamanho-1);
-    scanf("%d", &vertice2);
-    if (vertice1>tamanho-1 || vertice2>tamanho-1 || vertice1<0 || vertice2<0){
-        printf("Valor invalido, tente novamente.");
-    }else{
-        m[vertice1][vertice2] = 1;
-        m[vertice2][vertice1] = 1;
+}
+
+void print_matriz(int t){
+
+    printf("\n");
+
+    for (int i=0; i<t; i++){
+        for (int j=0; j<t; j++){
+            printf("%d", m[i][j]);
+        }
+        printf("\n");
     }
 }
 
 
 int main(){
 
-    int t = grafo_tamanho();
-    grafo_inserirv_direcionado(t);
+    int tg = tipo_do_grafo();
+    int t;
 
-    //Printando a matriz
-    for (int i=0; i<10 ; i++){
-        for (int j=0; j<10; j++){
-            printf("%d", m[i][j]);
-        }
-        printf("\n");
+    switch (tg)
+    {
+    case 0:
+        t = grafo_tamanho();
+        grafo_inserirv_direcionado(t);
+        print_matriz(t);
+        break;
+    case 1:
+        t = grafo_tamanho();
+        grafo_inserirv_ndirecionado(t);
+        print_matriz(t);
+        break;
+
+    default:
+        printf("Valor invalido. Tente novamente. \n");
+        break;
     }
+
+    return 0;
 }
