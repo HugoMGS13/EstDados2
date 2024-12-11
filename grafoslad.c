@@ -1,7 +1,9 @@
 //Discente: Hugo Martins Gaspar da Silva
+//Matrícula: 202311140020
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct noh Noh;
 struct noh{
@@ -15,7 +17,8 @@ typedef struct grafo{
     Noh **A; //O apontador A aponta para a estrutura Noh que tem um apontador prox, logo A é um apontador de apontador
     int n; //nós
     int a; //arestas
-}*Grafo;
+}*Grafo; //Typedef está declarando um ponteiro para a struct grafo, ou seja, ao criar um grafo nós já estamos 
+//criando um ponteiro para a struct grafo sem precisar criar um manualmente
 
 Grafo inicializarGrafo(int n){
 
@@ -31,6 +34,36 @@ Grafo inicializarGrafo(int n){
         G->A[i] = NULL;
     }
     return G; //retornando o grafo
+}
+
+// Função recursiva para realizar DFS
+void dfs_recursive(Grafo G, int current_node, bool visited[]) {
+    // Marca o nó atual como visitado
+    visited[current_node] = true;
+    printf("Visitou noh: %d\n", current_node);
+
+    // Percorre os vizinhos do nó atual
+    Noh* temp = G->A[current_node];
+    while (temp != NULL) {
+        int adjacent = temp->rotulo;
+        if (!visited[adjacent]) {
+            dfs_recursive(G, adjacent, visited);
+        }
+        temp = temp->prox;
+    }
+}
+
+// Função principal para realizar DFS
+void dfs(Grafo G, int start_node) {
+    // Vetor para rastrear os nós visitados
+    bool visited[100] = {false};
+
+    // Inicia a DFS
+    dfs_recursive(G, start_node, visited);
+}
+
+void bfs(Grafo G, int start_node){
+    
 }
 
 void inserirAresta(Grafo G, int o, int d){ //d = vértice destino, o = vértice de origem 
@@ -76,7 +109,6 @@ void liberargrafo(Grafo G){
     G->A = NULL;
 
     free(G); //Liberando o espaço de memória que o grafo ocupa
-    return NULL;
 }
 
 void imprimirGrafo(Grafo G) {
@@ -107,6 +139,8 @@ int main(){
     inserirAresta(G, 3, 4);
 
     imprimirGrafo(G); // Imprime o grafo
+
+    dfs(G,0);
 
     return 0;
 }
